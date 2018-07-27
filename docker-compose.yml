@@ -16,14 +16,14 @@ services:
             dockerfile: docker/app.docker
         volumes:
             - ./:/var/www
-        links:
-            - mysql-server
         environment:
             - "DB_PORT=3306"
             - "DB_HOST=mysql-server"
 
     mysql-server:
       image: mysql:5.6
+      volumes:
+        - dbdata:/var/lib/mysql
       environment:
         - "MYSQL_ROOT_PASSWORD=secret"
         - "MYSQL_DATABASE=dockerApp"
@@ -35,3 +35,5 @@ services:
         image: memcached
         ports:
           - 11233:11211
+volumes:
+  dbdata:

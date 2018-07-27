@@ -1,5 +1,9 @@
 FROM php:7-fpm
 
-RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client
+RUN apt-get update && apt-get install -y libmcrypt-dev mysql-client zlib1g-dev && docker-php-ext-install pdo pdo_mysql zip
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 WORKDIR /var/www
+
+RUN apt-get install -y libmemcached-dev && \
+pecl install memcached && \
+docker-php-ext-enable memcached

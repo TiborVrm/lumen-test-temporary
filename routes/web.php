@@ -18,17 +18,17 @@
 //    return $router->app->version();
 //});
 
-$router->group(['middleware' => 'auth'], function () use ($router) {
+$router->group(['middleware' => 'client'], function () use ($router) {
 
     $router->get('transactions', function () {
         return 'No transactions found';
     });
 
+    $router->post('transactions/{id}', 'Controller@handlePost');
+    $router->get('transactions/{id}', 'Controller@handleGet');
 });
 
 $router->post('transactions', function () {
     return 'No ID given';
 });
-
-$router->post('transactions/{id}', 'Controller@handleTransactions');
 
